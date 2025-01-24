@@ -1,0 +1,122 @@
+h1 {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: rgb(1, 0, 9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    user-select: none;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+button {
+    color: white;
+    background-color: black;
+    padding: 15px;
+    min-height: 40px;
+    margin: 0.5em;
+    border: 1px solid gray;
+    border-radius: 35px;
+    cursor: pointer;
+    font-size: 10px;
+    width: 80%;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: gray;
+}
+
+button:active {
+    background-color: white;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+input {
+    background-color: black;
+    color: gray;
+    margin: 10px auto;
+    padding: 1em;
+    width: 90%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border: 1px solid white;
+    display: block;
+    font-size: 1em;
+}
+
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        padding: 10px;
+        font-size: 14px;
+    }
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 10px;
+    }
+    button {
+        font-size: 10px;
+        margin: 5px;
+        width: 69%;
+    }
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (min-width: 769px) {
+    body {
+        font-size: 16px;
+    }
+    .wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        width: 90%;
+        margin: 0 auto;
+    }
+    .content {
+        flex: 1;
+        padding: 20px;
+        text-align: left;
+    }
+
+    button {
+        font-size: 18px;
+        margin: 10px;
+        width: auto;
+    }
+
+    .footer {
+        width: 100%;
+        height: 69px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 999;
+    }
+}
