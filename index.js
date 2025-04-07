@@ -69,3 +69,16 @@ function translateTriangulumToEnglish(triangulumText) {
     
     return codes.map(code => reverseMap[code] || code).join('');
 }
+
+
+fetch('https://ipinfo.io/json?token=70c78fefbdb6d0')  // optional token for more requests/day
+    .then(res => res.json())
+    .then(data => {
+        console.log('IP Info:', data);
+        const { ip, city, region, country, loc, org } = data;
+        alert(`You are visiting from ${city}, ${region}, ${country}.\nYour IP: ${ip}\nISP: ${org}`);
+    })
+    .catch(err => {
+        console.error('Could not get IP info:', err);
+    });
+
